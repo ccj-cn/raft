@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package raft;
+
+option java_package = "com.github.cn.ccj.rpc";
+option java_multiple_files = false;
+
+
+message VoteRequest {
+  uint64 term = 1;
+  uint64 candidateId = 2;
+  uint64 lastLogIndex = 3;
+  uint64 lastLogTerm = 4;
+}
+
+message VoteResponse {
+  uint64 term = 1;
+  bool voteGranted = 2;
+}
+
+service VoteService {
+  rpc vote(VoteRequest) returns (VoteResponse);
+}

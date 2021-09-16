@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package raft;
+
+option java_package = "com.github.cn.ccj.rpc";
+option java_multiple_files = false;
+
+message InstallSnapshotRequest {
+  uint64 term = 1;
+  uint64 leaderId = 2;
+  uint64 lastLogIndex = 3;
+  uint64 lastLogTerm = 4;
+  bytes configuration = 5;
+  uint64 configurationIndex = 6;
+  uint64 size = 7;
+}
+
+message InstallSnapshotResponse {
+  uint64 term = 1;
+  bool success = 2;
+}
+
+service InstallSnapshotService {
+  rpc installSnapshot(InstallSnapshotRequest) returns (InstallSnapshotResponse);
+}

@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package raft;
+
+option java_package = "com.github.cn.ccj.rpc";
+option java_multiple_files = false;
+
+
+enum LogEntryType {
+  EntryNormal = 0;
+  EntryConfig = 1;
+}
+
+message LogEntry {
+  uint64 term = 1;
+  uint64 index = 2;
+  LogEntryType type = 3;
+  bytes data = 4;
+}
+
+message AppendEntriesRequest {
+  uint64 term = 1;
+  uint64 leaderId = 2;
+  uint64 prevLogIndex = 3;
+  uint64 prevLogTerm = 4;
+  uint64 commitIndex = 5;
+  repeated LogEntry entries = 6;
+}
+
+message AppendEntriesResponse {
+  uint64 term = 1;
+  bool success = 2;
+  uint64 LastLogIndex = 3;
+}
+
+service AppendEntriesService {
+  rpc appendEntries(AppendEntriesRequest) returns (AppendEntriesResponse);
+}
+
